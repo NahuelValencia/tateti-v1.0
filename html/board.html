@@ -5,8 +5,8 @@
     <link rel="stylesheet" type="text/css" href="../css/tatetistyles.css" media="screen" />
 
     <!-- Link to js file-->
-    <script type="text/javascript" src="../js/utils.js"></script>
     <script type="text/javascript" src="../js/models.js"></script>
+    <script type="text/javascript" src="../js/utils.js"></script>
 </header>
 
 <body>
@@ -20,7 +20,7 @@
             <form name="players">
                 <label for="player1">Name of player one: </label>
                 <input type="text" id="player1" name="player1" placeholder="Jon">
-                <select id="card_player1" name="cardPlayer1" onchange="selectCard(this)">
+                <select id="piece_player1" name="piecePlayer1" onchange="selectPiece(this)">
                     <option value="default"></option>
                     <option value="X">X</option>
                     <option value="O">O</option>
@@ -28,7 +28,7 @@
 
                 <label for="player2">Name of player two: </label>
                 <input type="text" id="player2" name="player2" placeholder="Ygritte">
-                <select id="card_player2" name="cardPlayer2" onchange="selectCard(this)">
+                <select id="piece_player2" name="piecePlayer2" onchange="selectPiece(this)">
                     <option value="default"></option>
                     <option value="X">X</option>
                     <option value="O">O</option>
@@ -42,31 +42,30 @@
         <div class="column">
             <h2>Board</h2>
 
-            <form>
-                <h4 type="text" id="turnLabel">Turno de </h4>
-                <br>
-                <table>
-                    <tr>
-                        <td><input type="button" class="cell " name="b1 " id="button_1 " onClick="play() "></td>
-                        <td><input type="button" class="cell " name="b2 " id="button_2 " onClick="play() "></td>
-                        <td><input type="button" class="cell " name="b3 " id="button_3 " onClick="play() "></td>
-                    </tr>
-                    <tr>
-                        <td><input type="button" class="cell " name="b4 " id="button_4 " onClick="play() "></td>
-                        <td><input type="button" class="cell " name="b5 " id="button_5 " onClick="play() "></td>
-                        <td><input type="button" class="cell " name="b6 " id="button_6 " onClick="play() "></td>
-                    </tr>
-                    <tr>
-                        <td><input type="button" class="cell " name="b7 " id="button_7 " onClick="play() "></td>
-                        <td><input type="button" class="cell " name="b8 " id="button_8 " onClick="play() "></td>
-                        <td><input type="button" class="cell " name="b9 " id="button_9 " onClick="play() "></td>
-                    </tr>
-                </table>
+            <h4 type="text" id="turnLabel">Turns</h4>
+            <br>
+            <table>
+                <tr>
+                    <td><input type="button" class="cell" name="b1" id="button_1" onclick="play(this,0,0)"></td>
+                    <td><input type="button" class="cell" name="b2" id="button_2" onclick="play(this,0,1)"></td>
+                    <td><input type="button" class="cell" name="b3" id="button_3" onclick="play(this,0,2)"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" class="cell" name="b4" id="button_4" onclick="play(this,1,0)"></td>
+                    <td><input type="button" class="cell" name="b5" id="button_5" onclick="play(this,1,1)"></td>
+                    <td><input type="button" class="cell" name="b6" id="button_6" onclick="play(this,1,2)"></td>
+                </tr>
+                <tr>
+                    <td><input type="button" class="cell" name="b7" id="button_7" onclick="play(this,2,0)"></td>
+                    <td><input type="button" class="cell" name="b8" id="button_8" onclick="play(this,2,1)"></td>
+                    <td><input type="button" class="cell" name="b9" id="button_9" onclick="play(this,2,2)"></td>
+                </tr>
+            </table>
 
-                <br><br><br>
-                <input type="button" value="Nueva partida " onClick=" ">
-                <br><br><br>
-            </form>
+            <br><br><br>
+            <input type="button" value="Nueva partida" onClick=" ">
+            <br><br><br>
+
         </div>
 
         <div class="column">
