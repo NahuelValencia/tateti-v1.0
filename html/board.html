@@ -1,8 +1,12 @@
 <header>
     <title>Tateti v1.0</title>
 
-    <!-- Link a un archivo de estilos -->
+    <!-- Link to styles css files -->
     <link rel="stylesheet" type="text/css" href="../css/tatetistyles.css" media="screen" />
+
+    <!-- Link to js file-->
+    <script type="text/javascript" src="../js/utils.js"></script>
+    <script type="text/javascript" src="../js/models.js"></script>
 </header>
 
 <body>
@@ -13,22 +17,24 @@
         <div class="column">
             <h2>Players</h2>
 
-            <form>
+            <form name="players">
                 <label for="player1">Name of player one: </label>
                 <input type="text" id="player1" name="player1" placeholder="Jon">
-                <select id="card_player1">
+                <select id="card_player1" name="cardPlayer1" onchange="selectCard(this)">
+                    <option value="default"></option>
                     <option value="X">X</option>
                     <option value="O">O</option>
                 </select><br /><br />
 
                 <label for="player2">Name of player two: </label>
                 <input type="text" id="player2" name="player2" placeholder="Ygritte">
-                <select id="card_player2">
+                <select id="card_player2" name="cardPlayer2" onchange="selectCard(this)">
+                    <option value="default"></option>
                     <option value="X">X</option>
                     <option value="O">O</option>
                 </select><br /><br />
 
-                <input type="button" value="Play!" onclick="play()">
+                <input type="button" value="Play!" onclick="startGame()">
             </form>
 
         </div>
@@ -37,8 +43,8 @@
             <h2>Board</h2>
 
             <form>
-                <input type="button" name="whoseturn " value="Turno: Jugador Nº 1 ">
-                <br><br><br><br>
+                <h4 type="text" id="turnLabel">Turno de </h4>
+                <br>
                 <table>
                     <tr>
                         <td><input type="button" class="cell " name="b1 " id="button_1 " onClick="play() "></td>
