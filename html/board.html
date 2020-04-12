@@ -1,0 +1,71 @@
+<header>
+    <title>Tateti v1.0</title>
+
+    <!-- Link a un archivo de estilos -->
+    <link rel="stylesheet" type="text/css" href="../css/tatetistyles.css" media="screen" />
+</header>
+
+<body>
+    <div class="row">
+
+        <h1 style="text-align: center;">TA-TE-TI</h1>
+
+        <div class="column">
+            <h2>Players</h2>
+
+            <form>
+                <label for="player1">Name of player one: </label>
+                <input type="text" id="player1" name="player1" placeholder="Jon">
+                <select id="card_player1">
+                    <option value="X">X</option>
+                    <option value="O">O</option>
+                </select><br /><br />
+
+                <label for="player2">Name of player two: </label>
+                <input type="text" id="player2" name="player2" placeholder="Ygritte">
+                <select id="card_player2">
+                    <option value="X">X</option>
+                    <option value="O">O</option>
+                </select><br /><br />
+
+                <input type="button" value="Play!" onclick="play()">
+            </form>
+
+        </div>
+
+        <div class="column">
+            <h2>Board</h2>
+
+            <form>
+                <input type="button" name="whoseturn " value="Turno: Jugador Nº 1 ">
+                <br><br><br><br>
+                <table>
+                    <tr>
+                        <td><input type="button" class="cell " name="b1 " id="button_1 " onClick="play() "></td>
+                        <td><input type="button" class="cell " name="b2 " id="button_2 " onClick="play() "></td>
+                        <td><input type="button" class="cell " name="b3 " id="button_3 " onClick="play() "></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" class="cell " name="b4 " id="button_4 " onClick="play() "></td>
+                        <td><input type="button" class="cell " name="b5 " id="button_5 " onClick="play() "></td>
+                        <td><input type="button" class="cell " name="b6 " id="button_6 " onClick="play() "></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" class="cell " name="b7 " id="button_7 " onClick="play() "></td>
+                        <td><input type="button" class="cell " name="b8 " id="button_8 " onClick="play() "></td>
+                        <td><input type="button" class="cell " name="b9 " id="button_9 " onClick="play() "></td>
+                    </tr>
+                </table>
+
+                <br><br><br>
+                <input type="button" value="Nueva partida " onClick=" ">
+                <br><br><br>
+            </form>
+        </div>
+
+        <div class="column">
+            <h2>History</h2>
+            <p>WIP</p>
+        </div>
+    </div>
+</body>
