@@ -95,3 +95,7 @@ function play(btn, row, column) {
     }
     //prototypeBoard.addPiece(row, column, prototyeTateti)
 }
+
+function clearBoard() {
+    location.reload()
+}
