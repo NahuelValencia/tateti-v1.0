@@ -35,8 +35,8 @@ function prepareGame() {
     }
 
     //create players
-    var prototyePlayer1 = new Player(namePlayer1, piecePlayer1);
-    var prototyePlayer2 = new Player(namePlayer2, piecePlayer2);
+    var prototyePlayer1 = new Player(namePlayer1, piecePlayer1, 1);
+    var prototyePlayer2 = new Player(namePlayer2, piecePlayer2, 2);
 
     //TODO determinar el turno aleatoriamente
     prototyePlayer1.changeTurn(true);
@@ -81,25 +81,44 @@ function prepareBoard() {
 }
 
 function play(btn, row, column, name) {
+    console.log("Current player: " + prototyeTateti.currentPlayer()._id)
+    var currentPlayer = prototyeTateti.currentPlayer()
+
     if (justStarted) {
         justStarted = false;
         prototyeTateti.changeStatus("In progress");
     }
     console.log("Game in progress: " + prototyeTateti.status);
 
+    if (prototyeTateti == null) {
+        alert("There is no players");
+        return false;
+    }
+
     //check if the cell is busy otherwise, set cell Status as busy
     var cellSelected = prototyeTateti._board._cell[row][column];
-    if (cellSelected._name == name && cellSelected.isFree()) {
+    if (cellSelected.isFree()) {
         count++;
 
         cellSelected.setCellStatus(!cellSelected.busy);
 
         //set the player who use the cell to the CELL 
-        cellSelected.whoUseIt = setPlayerToCell();
+        cellSelected.whoUseIt = currentPlayer
 
         console.log("Change status for cell " + cellSelected._name + " to " + cellSelected.busy);
 
-        drawPiece(btn);
+        //draw piece in the board
+        var displayPiece = document.getElementById(btn.id);
+        //draw X or O and change turn
+        displayPiece.value = currentPlayer._pieceSelected
+
+        //change player status
+        prototyeTateti._player.forEach(element => {
+            element.changeTurn(!element.turn)
+        });
+
+        //muestra otro turno
+        showTurn(prototyeTateti._player)
 
     } else {
         alert("Cell already used");
@@ -107,10 +126,11 @@ function play(btn, row, column, name) {
     }
 
     if (count >= 3) {
-        isTateti();
+        isTateti(currentPlayer);
     }
 }
 
+//borrar
 function setPlayerToCell() {
     var actualPlayer;
     prototyeTateti._player.forEach(element => {
@@ -122,24 +142,114 @@ function setPlayerToCell() {
 }
 
 function drawPiece(btn) {
-    var displayPiece = document.getElementById(btn.id);
 
-    if (prototyeTateti != null) {
-        //draw X or O and change turn
-        prototyeTateti._player.forEach(element => {
-            if (element.turn) {
-                displayPiece.value = element._pieceSelected;
-            }
-            element.changeTurn(!element.turn)
-        });
-        showTurn(prototyeTateti._player)
 
-    } else {
-        alert("There is no players");
-        return false;
-    }
+
 
     //prototypeBoard.addPiece(row, column, prototyeTateti)
+}
+
+var interestValues = []
+
+function isTateti(currentPlayer) {
+
+    var valuesRow = checkRows(prototyeTateti._board._cell, currentPlayer);
+    console.log(valuesRow);
+
+    var valuesColumn = concatColumn(transposeArray(prototyeTateti._board._cell));
+    console.log(valuesColumn);
+
+    var valuesDiagonal = concatDiagonal(prototyeTateti._board._cell);
+    console.log(valuesDiagonal);
+
+    //var valuesBoard = valuesRow.concat(valuesColumn, valuesDiagonal);
+
+    //    console.log(valuesBoard);
+    // is3InRow()
+    //cada celda ya tiene almacenada su ficha a travez del player
+    //  solo queda determinar si hay 3 es linea
+
+}
+
+function checkRows(cells, currentPlayer) {
+    /*for (let row = 0; row < cells.length; row++) {
+        //console.log(cells[row][0].whoUseIt)
+        if (!cells[row][0].isFree() && !cells[row][1].isFree() && !cells[row][2].isFree()) {
+            
+        }
+        if (cells[row][0].whoUseIt._id == currentPlayer._id &&
+            cells[row][1].whoUseIt._id == currentPlayer._id &&
+            cells[row][2].whoUseIt._id == currentPlayer._id) {
+
+            console.log("Ganador: " + currentPlayer._name)
+        }
+    }
+    */
+
+
+    let flatArray = cells.flat();
+    console.log(cells);
+    var array = new Array;
+    flatArray.forEach(element => {
+        if (!element.isFree()) {
+            array.push(element.whoUseIt._pieceSelected); //recupero la ficha de jugador que uso la celda
+        } else {
+            array.push('')
+        }
+    });
+
+    return array
+}
+
+function transposeArray(cells) {
+
+    /*arrayTest = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ];*/
+
+    var transpose = xs =>
+        xs[0].map((_, iCol) => xs.map(row => row[iCol]));
+
+    //console.log(transpose(arrayTest).flat().flat())
+
+    return transpose(cells).flat().flat()
+}
+
+function concatColumn(transposeArray) {
+    var array = new Array;
+
+    transposeArray.forEach(element => {
+        if (!element.isFree()) {
+            array.push(element.whoUseIt._pieceSelected);
+        } else {
+            array.push('')
+        }
+    });
+
+    return array
+}
+
+function concatDiagonal(cells) {
+    let diagonal = new Array()
+    let contraDiagonal = new Array()
+
+    for (let row = 0; row < cells.length; row++) {
+        if (!cells[row][row].isFree()) {
+            diagonal.push(cells[row][row].whoUseIt._pieceSelected);
+        } else {
+            diagonal.push('')
+        }
+        if (!cells[row][cells.length - row - 1].isFree()) {
+            contraDiagonal.push(cells[row][cells.length - row - 1].whoUseIt._pieceSelected);
+        } else {
+            contraDiagonal.push('')
+        }
+
+    }
+
+    return diagonal.concat(contraDiagonal)
 }
 
 function clearBoard() {

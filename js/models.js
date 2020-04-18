@@ -6,8 +6,18 @@ var TatetiGame = function(player, board) {
 TatetiGame.prototype.changeStatus = function(newStatus) {
     this.status = newStatus;
 }
+TatetiGame.prototype.currentPlayer = function() {
+    var player
+    this._player.forEach(element => {
+        if (element.turn) {
+            player = element
+        }
+    });
+    return player
+}
 
-var Player = function(name, pieceSelected) {
+var Player = function(name, pieceSelected, id) {
+    this._id = id;
     this._name = name;
     this._pieceSelected = pieceSelected;
     this.turn = false;
