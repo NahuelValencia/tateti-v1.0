@@ -141,115 +141,60 @@ function setPlayerToCell() {
     return actualPlayer;
 }
 
-function drawPiece(btn) {
-
-
-
-
-    //prototypeBoard.addPiece(row, column, prototyeTateti)
-}
-
 var interestValues = []
 
 function isTateti(currentPlayer) {
+    var cells = prototyeTateti._board._cell
 
-    var valuesRow = checkRows(prototyeTateti._board._cell, currentPlayer);
-    console.log(valuesRow);
-
-    var valuesColumn = concatColumn(transposeArray(prototyeTateti._board._cell));
-    console.log(valuesColumn);
-
-    var valuesDiagonal = concatDiagonal(prototyeTateti._board._cell);
-    console.log(valuesDiagonal);
-
-    //var valuesBoard = valuesRow.concat(valuesColumn, valuesDiagonal);
-
-    //    console.log(valuesBoard);
-    // is3InRow()
-    //cada celda ya tiene almacenada su ficha a travez del player
-    //  solo queda determinar si hay 3 es linea
-
-}
-
-function checkRows(cells, currentPlayer) {
-    /*for (let row = 0; row < cells.length; row++) {
-        //console.log(cells[row][0].whoUseIt)
+    //check rows
+    for (let row = 0; row < cells.length; row++) {
         if (!cells[row][0].isFree() && !cells[row][1].isFree() && !cells[row][2].isFree()) {
-            
-        }
-        if (cells[row][0].whoUseIt._id == currentPlayer._id &&
-            cells[row][1].whoUseIt._id == currentPlayer._id &&
-            cells[row][2].whoUseIt._id == currentPlayer._id) {
+            if (cells[row][0].whoUseIt._id == currentPlayer._id &&
+                cells[row][1].whoUseIt._id == currentPlayer._id &&
+                cells[row][2].whoUseIt._id == currentPlayer._id) {
 
-            console.log("Ganador: " + currentPlayer._name)
+                prototyeTateti.newWinner(currentPlayer)
+                return
+            }
         }
     }
-    */
 
+    //check columns 
+    for (let column = 0; column < cells.length; column++) {
+        if (!cells[0][column].isFree() && !cells[1][column].isFree() && !cells[2][column].isFree()) {
+            if (cells[0][column].whoUseIt._id == currentPlayer._id &&
+                cells[1][column].whoUseIt._id == currentPlayer._id &&
+                cells[2][column].whoUseIt._id == currentPlayer._id) {
 
-    let flatArray = cells.flat();
-    console.log(cells);
-    var array = new Array;
-    flatArray.forEach(element => {
-        if (!element.isFree()) {
-            array.push(element.whoUseIt._pieceSelected); //recupero la ficha de jugador que uso la celda
-        } else {
-            array.push('')
+                prototyeTateti.newWinner(currentPlayer)
+
+                return
+            }
         }
-    });
+    }
 
-    return array
-}
-
-function transposeArray(cells) {
-
-    /*arrayTest = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ];*/
-
-    var transpose = xs =>
-        xs[0].map((_, iCol) => xs.map(row => row[iCol]));
-
-    //console.log(transpose(arrayTest).flat().flat())
-
-    return transpose(cells).flat().flat()
-}
-
-function concatColumn(transposeArray) {
-    var array = new Array;
-
-    transposeArray.forEach(element => {
-        if (!element.isFree()) {
-            array.push(element.whoUseIt._pieceSelected);
-        } else {
-            array.push('')
-        }
-    });
-
-    return array
-}
-
-function concatDiagonal(cells) {
-    let diagonal = new Array()
-    let contraDiagonal = new Array()
+    //check diagonals
+    var diagonal = new Array()
+    var contraDiagonal = new Array()
 
     for (let row = 0; row < cells.length; row++) {
         if (!cells[row][row].isFree()) {
-            diagonal.push(cells[row][row].whoUseIt._pieceSelected);
-        } else {
-            diagonal.push('')
+            diagonal.push(cells[row][row])
         }
         if (!cells[row][cells.length - row - 1].isFree()) {
-            contraDiagonal.push(cells[row][cells.length - row - 1].whoUseIt._pieceSelected);
-        } else {
-            contraDiagonal.push('')
+            contraDiagonal.push(cells[row][cells.length - row - 1])
         }
-
     }
 
-    return diagonal.concat(contraDiagonal)
+    if (diagonal.length == 3 && (diagonal[0].whoUseIt._id == currentPlayer._id && diagonal[1].whoUseIt._id == currentPlayer._id && diagonal[2].whoUseIt._id == currentPlayer._id)) {
+        prototyeTateti.newWinner(currentPlayer)
+        return
+    }
+
+    if (contraDiagonal.length == 3 && (contraDiagonal[0].whoUseIt._id == currentPlayer._id && contraDiagonal[1].whoUseIt._id == currentPlayer._id && contraDiagonal[2].whoUseIt._id == currentPlayer._id)) {
+        prototyeTateti.newWinner(currentPlayer)
+        return
+    }
 }
 
 function clearBoard() {

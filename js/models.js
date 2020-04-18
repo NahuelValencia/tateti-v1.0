@@ -2,6 +2,7 @@ var TatetiGame = function(player, board) {
     this._player = player;
     this._board = board;
     this.status = status;
+    this._winner = new Array();
 }
 TatetiGame.prototype.changeStatus = function(newStatus) {
     this.status = newStatus;
@@ -14,6 +15,9 @@ TatetiGame.prototype.currentPlayer = function() {
         }
     });
     return player
+}
+TatetiGame.prototype.newWinner = function(player) {
+    this._winner.push(player)
 }
 
 var Player = function(name, pieceSelected, id) {
