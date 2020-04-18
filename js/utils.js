@@ -39,7 +39,7 @@ function prepareGame() {
     var prototyePlayer2 = new Player(namePlayer2, piecePlayer2);
 
     //TODO determinar el turno aleatoriamente
-    prototyePlayer1.setTurn(true);
+    prototyePlayer1.changeTurn(true);
 
     //create Board and Cells
     var prototypeBoard = prepareBoard();
@@ -93,15 +93,32 @@ function play(btn, row, column, name) {
         count++;
 
         cellSelected.setCellStatus(!cellSelected.busy);
+
+        //set the player who use the cell to the CELL 
+        cellSelected.whoUseIt = setPlayerToCell();
+
         console.log("Change status for cell " + cellSelected._name + " to " + cellSelected.busy);
 
         drawPiece(btn);
-
 
     } else {
         alert("Cell already used");
         return false;
     }
+
+    if (count >= 3) {
+        isTateti();
+    }
+}
+
+function setPlayerToCell() {
+    var actualPlayer;
+    prototyeTateti._player.forEach(element => {
+        if (element.turn) {
+            actualPlayer = element;
+        }
+    });
+    return actualPlayer;
 }
 
 function drawPiece(btn) {
@@ -113,7 +130,7 @@ function drawPiece(btn) {
             if (element.turn) {
                 displayPiece.value = element._pieceSelected;
             }
-            element.setTurn(!element.turn)
+            element.changeTurn(!element.turn)
         });
         showTurn(prototyeTateti._player)
 

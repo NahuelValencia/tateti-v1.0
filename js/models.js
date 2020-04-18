@@ -12,7 +12,7 @@ var Player = function(name, pieceSelected) {
     this._pieceSelected = pieceSelected;
     this.turn = false;
 }
-Player.prototype.setTurn = function(playerTurn) {
+Player.prototype.changeTurn = function(playerTurn) {
     this.turn = playerTurn;
 }
 
@@ -30,10 +30,14 @@ var Cell = function(row, column, name) {
     this._row = row;
     this._column = column;
     this.busy = false;
+    this.whoUseIt = null;
     this.isFree = function() {
         return !this.busy
     }
 }
 Cell.prototype.setCellStatus = function(busy) {
     this.busy = busy;
+}
+Cell.prototype.playerUsing = function(player) {
+    this.whoUseIt = player
 }
