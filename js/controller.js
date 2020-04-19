@@ -107,12 +107,41 @@ function showTurn(players) {
 
 function showWinner(player) {
     var displayLabel = document.getElementById('turnLabel');
-    displayLabel.innerText = player._name + " is the new winner !"
+    displayLabel.innerText = player._name + " is the new winner !";
+    refreshTableScore();
 }
 
 function showTie() {
     var displayLabel = document.getElementById('turnLabel');
-    displayLabel.innerText = "It is a tie !"
+    displayLabel.innerText = "It is a tie !";
+    refreshTableScore();
+}
+
+function refreshTableScore() {
+    var wonPlayer1 = document.getElementById('won1');
+    var wonPlayer2 = document.getElementById('won2');
+    var lostPlayer1 = document.getElementById('lost1');
+    var lostPlayer2 = document.getElementById('lost2');
+    var tiedPlayer1 = document.getElementById('tied1');
+    var tiedPlayer2 = document.getElementById('tied2');
+
+    var totalGames = document.getElementById('totalGames');
+    totalGames.innerText = tatetiGame.totalGames;
+
+    tatetiGame._player.forEach(element => {
+
+        if (element._id == 1) {
+            wonPlayer1.innerText = element._won;
+            lostPlayer1.innerText = element._lost;
+            tiedPlayer1.innerText = element._tied;
+        }
+
+        if (element._id == 2) {
+            wonPlayer2.innerText = element._won;
+            lostPlayer2.innerText = element._lost;
+            tiedPlayer2.innerText = element._tied;
+        }
+    });
 }
 
 function play(btn, row, column, name) {
@@ -169,11 +198,11 @@ function play(btn, row, column, name) {
         return false;
     }
 
+    checkEndGame(currentPlayer)
+}
 
-    if (tatetiGame.isTateti(currentPlayer)) {
-        showWinner(currentPlayer);
-        document.getElementById("playAgainBtn").style.visibility = 'visible';
-
+function checkEndGame(currentPlayer) {
+    if (tatetiGame.isTateti(currentPlayer)) { //winner
         tatetiGame.increaseGameQty();
         currentPlayer.increaseWon();
 
@@ -183,16 +212,19 @@ function play(btn, row, column, name) {
             }
         });
 
-    } else if (tatetiGame._board.count == 9) {
+        showWinner(currentPlayer);
+        document.getElementById("playAgainBtn").style.visibility = 'visible';
+
+    } else if (tatetiGame._board.count == 9) { //tie
+        tatetiGame.increaseGameQty();
         tatetiGame._player.forEach(element => {
             element.increaseTied();
         });
+
         showTie();
         document.getElementById("playAgainBtn").style.visibility = 'visible';
 
-        tatetiGame.increaseGameQty();
     }
-
 }
 
 function clearBoard() {
