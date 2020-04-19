@@ -35,7 +35,7 @@
                     <option value="O">O</option>
                 </select><br /><br />
 
-                <input type="button" value="Play!" onclick="prepareGame()">
+                <input id="playbtn" type="button" value="Play!" onclick="prepareGame()">
             </form>
 
         </div>
@@ -45,7 +45,7 @@
 
             <h4 type="text" id="turnLabel">Turns</h4>
             <br>
-            <table>
+            <table id="boardTateti">
                 <tr>
                     <td><input type="button" class="cell" id="button_1" onclick="play(this,0,0,'btn1')"></td>
                     <td><input type="button" class="cell" id="button_2" onclick="play(this,0,1,'btn2')"></td>
@@ -65,14 +65,45 @@
 
             <br><br><br>
             <input type="button" value="New Game" onclick="clearBoard()">
-            <input type="button" value="Revancha" onclick="">
+            <input style="visibility: hidden;" type="button" value="Play Again" onclick="playAgain()" id="playAgainBtn">
             <br><br><br>
 
         </div>
 
         <div class="column">
             <h2>History</h2>
-            <p>WIP</p>
+            <br>
+
+            <table cellspacing="0" cellpadding="0" width="425">
+
+                <tr style="color:white;background-color:grey">
+                    <th></th>
+                    <th id="namePlayer1">Player 1</th>
+                    <th id="namePlayer2">Player 2</th>
+                </tr>
+                <tr>
+                    <td>Won</td>
+                    <td style="text-align: center;" id="won1">0</td>
+                    <td style="text-align: center;" id="won2">0</td>
+                </tr>
+                <tr>
+                    <td>Lost</td>
+                    <td style="text-align: center;" id="lost1">0</td>
+                    <td style="text-align: center;" id="lost2">0</td>
+                </tr>
+                <tr>
+                    <td>Tied</td>
+                    <td style="text-align: center;" id="tied1">0</td>
+                    <td style="text-align: center;" id="tied2">0</td>
+                </tr>
+            </table>
+            <br>
+            <table>
+                <tr>
+                    <td>Total Games: </td>
+                    <td style="text-align: center;" id="totalGames">0</td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>

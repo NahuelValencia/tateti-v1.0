@@ -3,6 +3,12 @@ var TatetiGame = function(player, board, status) {
     this._board = board;
     this.status = status;
     this._winner = new Array();
+    this.totalGames = 0;
+}
+
+//Increase games qauntity
+TatetiGame.prototype.increaseGameQty = function() {
+    this.totalGames++;
 }
 
 //change game status
@@ -40,11 +46,27 @@ TatetiGame.prototype.cellSelected = function(row, column) {
     return this._board._cell[row][column];
 }
 
+//Reset all unnecessary data
+TatetiGame.prototype.resetGame = function() {
+    this.changeStatus("Play Again");
+    this._player.forEach(element => {
+        element.choosePiece(undefined);
+        element.changeTurn(false);
+    });
+    this._board._cell.forEach(row => {
+        row.forEach(cell => {
+            cell.setCellStatus(false);
+            cell.playerUsing(undefined);
+        });
+    });
+    this._board.count = 0
+}
+
 //check if a player has won
 TatetiGame.prototype.isTateti = function(currentPlayer) {
-    var cells = this._board._cell
-    var winner = undefined
-    var gameEnded = false
+    var cells = this._board._cell;
+    var winner = undefined;
+    var gameEnded = false;
 
     console.log("In isTateti");
     //check rows
@@ -100,8 +122,7 @@ TatetiGame.prototype.isTateti = function(currentPlayer) {
     if (winner != undefined) {
         this.changeStatus("Finish")
         gameEnded = true
-        console.log("Tenemos un nuevo ganador. Distinto de undefined")
-
+        console.log("Tenemos un nuevo ganador.")
     }
 
     return gameEnded
@@ -110,10 +131,13 @@ TatetiGame.prototype.isTateti = function(currentPlayer) {
 
 
 
-var Player = function(name, pieceSelected, id) {
+var Player = function(name, id) {
     this._id = id;
     this._name = name;
-    this._pieceSelected = pieceSelected;
+    this._pieceSelected = undefined;
+    this._won = 0;
+    this._lost = 0;
+    this._tied = 0;
     this.turn = false;
 }
 
@@ -122,13 +146,27 @@ Player.prototype.changeTurn = function(playerTurn) {
     this.turn = playerTurn;
 }
 
+//set the piece to the player
+Player.prototype.choosePiece = function(piece) {
+    this._pieceSelected = piece
+}
 
+Player.prototype.increaseWon = function() {
+    this._won++;
+}
 
+Player.prototype.increaseLost = function(total) {
+    this._lost = total - this._won - this._tied;
+}
 
+Player.prototype.increaseTied = function() {
+    this._tied++;
+}
 
 var Board = function(game) {
     //this._game = game;
-    this._cell = new Array()
+    this._cell = new Array();
+    this.count = 0;
 }
 
 
@@ -140,7 +178,7 @@ var Cell = function(row, column, name) {
     this._row = row;
     this._column = column;
     this.busy = false;
-    this.whoUseIt = null;
+    this.whoUseIt = undefined;
     this.isFree = function() {
         return !this.busy
     }
