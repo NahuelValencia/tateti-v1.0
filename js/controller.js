@@ -16,6 +16,7 @@ function selectPiece(piece) {
         piecePlayer1.selectedIndex = 1;
     }
 
+    //when players choose to play again
     if (tatetiGame != undefined && tatetiGame.status === 'Play Again') {
         tatetiGame._player[0].choosePiece(piecePlayer1.value);
         tatetiGame._player[1].choosePiece(piecePlayer2.value);
@@ -24,9 +25,11 @@ function selectPiece(piece) {
         //set turn to the player how has chosen an X
         tatetiGame._player.forEach(element => {
             if (element._pieceSelected == 'X') {
-                element.changeTurn(true)
+                element.changeTurn(true);
             }
         })
+
+        showTurn(tatetiGame._player);
     }
 }
 
