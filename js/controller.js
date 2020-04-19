@@ -51,6 +51,10 @@ function prepareGame() {
         return false;
     }
 
+    //set the name in the table score
+    document.getElementById('namePlayer1').innerText = namePlayer1;
+    document.getElementById('namePlayer2').innerText = namePlayer2;
+
     //create players
     var player1 = new Player(namePlayer1, 1);
     var player2 = new Player(namePlayer2, 2);
