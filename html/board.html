@@ -6,6 +6,7 @@
 
     <!-- Link to js file-->
     <script type="text/javascript" src="../js/models.js"></script>
+    <script type="text/javascript" src="../js/controller.js"></script>
     <script type="text/javascript" src="../js/utils.js"></script>
 </header>
 
@@ -34,7 +35,7 @@
                     <option value="O">O</option>
                 </select><br /><br />
 
-                <input type="button" value="Play!" onclick="startGame()">
+                <input type="button" value="Play!" onclick="prepareGame()">
             </form>
 
         </div>
@@ -46,19 +47,19 @@
             <br>
             <table>
                 <tr>
-                    <td><input type="button" class="cell" name="b1" id="button_1" onclick="play(this,0,0)"></td>
-                    <td><input type="button" class="cell" name="b2" id="button_2" onclick="play(this,0,1)"></td>
-                    <td><input type="button" class="cell" name="b3" id="button_3" onclick="play(this,0,2)"></td>
+                    <td><input type="button" class="cell" id="button_1" onclick="play(this,0,0,'btn1')"></td>
+                    <td><input type="button" class="cell" id="button_2" onclick="play(this,0,1,'btn2')"></td>
+                    <td><input type="button" class="cell" id="button_3" onclick="play(this,0,2,'btn3')"></td>
                 </tr>
                 <tr>
-                    <td><input type="button" class="cell" name="b4" id="button_4" onclick="play(this,1,0)"></td>
-                    <td><input type="button" class="cell" name="b5" id="button_5" onclick="play(this,1,1)"></td>
-                    <td><input type="button" class="cell" name="b6" id="button_6" onclick="play(this,1,2)"></td>
+                    <td><input type="button" class="cell" id="button_4" onclick="play(this,1,0,'btn4')"></td>
+                    <td><input type="button" class="cell" id="button_5" onclick="play(this,1,1,'btn5')"></td>
+                    <td><input type="button" class="cell" id="button_6" onclick="play(this,1,2,'btn6')"></td>
                 </tr>
                 <tr>
-                    <td><input type="button" class="cell" name="b7" id="button_7" onclick="play(this,2,0)"></td>
-                    <td><input type="button" class="cell" name="b8" id="button_8" onclick="play(this,2,1)"></td>
-                    <td><input type="button" class="cell" name="b9" id="button_9" onclick="play(this,2,2)"></td>
+                    <td><input type="button" class="cell" id="button_7" onclick="play(this,2,0,'btn7')"></td>
+                    <td><input type="button" class="cell" id="button_8" onclick="play(this,2,1,'btn8')"></td>
+                    <td><input type="button" class="cell" id="button_9" onclick="play(this,2,2,'btn9')"></td>
                 </tr>
             </table>
 
