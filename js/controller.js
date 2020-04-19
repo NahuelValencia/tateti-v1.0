@@ -72,8 +72,6 @@ function prepareGame() {
         }
     })
 
-    tatetiGame.increaseGameQty();
-
     console.log("Game status: " + tatetiGame.status);
 
     showTurn(tatetiGame._player);
@@ -173,14 +171,26 @@ function play(btn, row, column, name) {
 
 
     if (tatetiGame.isTateti(currentPlayer)) {
-        showWinner(currentPlayer)
-        document.getElementById("playAgainBtn").style.visibility = 'visible'
+        showWinner(currentPlayer);
+        document.getElementById("playAgainBtn").style.visibility = 'visible';
+
+        tatetiGame.increaseGameQty();
+        currentPlayer.increaseWon();
+
+        tatetiGame._player.forEach(element => {
+            if (element._id != currentPlayer._id) {
+                element.increaseLost(tatetiGame.totalGames)
+            }
+        });
+
     } else if (tatetiGame._board.count == 9) {
         tatetiGame._player.forEach(element => {
             element.increaseTied();
         });
-        showTie()
-        document.getElementById("playAgainBtn").style.visibility = 'visible'
+        showTie();
+        document.getElementById("playAgainBtn").style.visibility = 'visible';
+
+        tatetiGame.increaseGameQty();
     }
 
 }

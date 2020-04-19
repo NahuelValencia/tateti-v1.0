@@ -122,7 +122,6 @@ TatetiGame.prototype.isTateti = function(currentPlayer) {
     if (winner != undefined) {
         this.changeStatus("Finish")
         gameEnded = true
-        currentPlayer.increaseWon()
         console.log("Tenemos un nuevo ganador.")
     }
 
@@ -156,7 +155,7 @@ Player.prototype.increaseWon = function() {
     this._won++;
 }
 
-Player.prototype.lostGames = function(total) {
+Player.prototype.increaseLost = function(total) {
     this._lost = total - this._won - this._tied;
 }
 
