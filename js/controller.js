@@ -60,8 +60,8 @@ function prepareGame() {
     var player2 = new Player(namePlayer2, 2);
 
     //set the pieces
-    player1.choosePiece(piecePlayer1)
-    player2.choosePiece(piecePlayer2)
+    player1.choosePiece(piecePlayer1);
+    player2.choosePiece(piecePlayer2);
 
     //create Board and Cells
     var board = prepareBoard();
@@ -72,7 +72,7 @@ function prepareGame() {
     //set turn to the player how has chosen an X
     tatetiGame._player.forEach(element => {
         if (element._pieceSelected == 'X') {
-            element.changeTurn(true)
+            element.changeTurn(true);
         }
     })
 
@@ -157,13 +157,13 @@ function play(btn, row, column, name) {
 
     //si el juego a terminado no se puede seguir jugando
     if (tatetiGame.status == "Finish") {
-        return
+        return;
     }
 
     //chequea que los jugadores tengan fichas
     if (tatetiGame.status == "Play Again") {
-        alert("Choose pieces")
-        return false
+        alert("Choose pieces");
+        return false;
     }
 
     var currentPlayer = tatetiGame.currentPlayer();
@@ -192,17 +192,17 @@ function play(btn, row, column, name) {
         displayPiece.value = currentPlayer._pieceSelected;
 
         //change players turn
-        tatetiGame.changePlayerTurn()
+        tatetiGame.changePlayerTurn();
 
         //muestra turno en pantalla
-        showTurn(tatetiGame._player)
+        showTurn(tatetiGame._player);
 
     } else {
         alert("Cell already used");
         return false;
     }
 
-    checkEndGame(currentPlayer)
+    checkEndGame(currentPlayer);
 }
 
 function checkEndGame(currentPlayer) {
@@ -212,7 +212,7 @@ function checkEndGame(currentPlayer) {
 
         tatetiGame._player.forEach(element => {
             if (element._id != currentPlayer._id) {
-                element.increaseLost(tatetiGame.totalGames)
+                element.increaseLost(tatetiGame.totalGames);
             }
         });
 
@@ -232,20 +232,20 @@ function checkEndGame(currentPlayer) {
 }
 
 function clearBoard() {
-    location.reload()
+    location.reload();
 }
 
 function playAgain() {
     if (tatetiGame == undefined) {
-        alert("Start a game first!!!!")
-        return false
+        alert("Start a game first!!!!");
+        return false;
     }
-    tatetiGame.resetGame()
-    document.getElementById("piece_player1").value = "default"
-    document.getElementById("piece_player2").value = "default"
-    document.getElementById("playAgainBtn").style.visibility = 'hidden'
+    tatetiGame.resetGame();
+    document.getElementById("piece_player1").value = "default";
+    document.getElementById("piece_player2").value = "default";
+    document.getElementById("playAgainBtn").style.visibility = 'hidden';
 
-    var board = document.getElementById("boardTateti")
+    var board = document.getElementById("boardTateti");
 
     for (var i = 0; i < board.rows.length; i++) {
         board.rows[i].cells[0].firstElementChild.value = "";

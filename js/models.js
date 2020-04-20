@@ -14,31 +14,31 @@ TatetiGame.prototype.increaseGameQty = function() {
 //change game status
 TatetiGame.prototype.changeStatus = function(newStatus) {
     this.status = newStatus;
-    console.log("Game status: " + newStatus)
+    console.log("Game status: " + newStatus);
 }
 
 //get current player
 TatetiGame.prototype.currentPlayer = function() {
-    var player
+    var player;
     this._player.forEach(element => {
         if (element.turn) {
-            player = element
+            player = element;
         }
     });
-    return player
+    return player;
 }
 
 //change players turn
 TatetiGame.prototype.changePlayerTurn = function() {
     this._player.forEach(element => {
-        element.changeTurn(!element.turn)
+        element.changeTurn(!element.turn);
     });
 }
 
 //set the winner
 TatetiGame.prototype.newWinner = function(player) {
-    this._winner.push(player)
-    console.log("New winner: " + player._name)
+    this._winner.push(player);
+    console.log("New winner: " + player._name);
 }
 
 //get cell selected by player
@@ -59,7 +59,7 @@ TatetiGame.prototype.resetGame = function() {
             cell.playerUsing(undefined);
         });
     });
-    this._board.count = 0
+    this._board.count = 0;
 }
 
 //check if a player has won
@@ -76,8 +76,8 @@ TatetiGame.prototype.isTateti = function(currentPlayer) {
                 cells[row][1].whoUseIt._id == currentPlayer._id &&
                 cells[row][2].whoUseIt._id == currentPlayer._id) {
 
-                this.newWinner(currentPlayer)
-                winner = currentPlayer
+                this.newWinner(currentPlayer);
+                winner = currentPlayer;
             }
         }
     }
@@ -89,43 +89,43 @@ TatetiGame.prototype.isTateti = function(currentPlayer) {
                 cells[1][column].whoUseIt._id == currentPlayer._id &&
                 cells[2][column].whoUseIt._id == currentPlayer._id) {
 
-                this.newWinner(currentPlayer)
+                this.newWinner(currentPlayer);
 
-                winner = currentPlayer
+                winner = currentPlayer;
             }
         }
     }
 
     //check diagonals
-    var diagonal = new Array()
-    var contraDiagonal = new Array()
+    var diagonal = new Array();
+    var contraDiagonal = new Array();
 
     for (let row = 0; row < cells.length; row++) {
         if (!cells[row][row].isFree()) {
-            diagonal.push(cells[row][row])
+            diagonal.push(cells[row][row]);
         }
         if (!cells[row][cells.length - row - 1].isFree()) {
-            contraDiagonal.push(cells[row][cells.length - row - 1])
+            contraDiagonal.push(cells[row][cells.length - row - 1]);
         }
     }
 
     if (diagonal.length == 3 && (diagonal[0].whoUseIt._id == currentPlayer._id && diagonal[1].whoUseIt._id == currentPlayer._id && diagonal[2].whoUseIt._id == currentPlayer._id)) {
-        this.newWinner(currentPlayer)
-        winner = currentPlayer
+        this.newWinner(currentPlayer);
+        winner = currentPlayer;
     }
 
     if (contraDiagonal.length == 3 && (contraDiagonal[0].whoUseIt._id == currentPlayer._id && contraDiagonal[1].whoUseIt._id == currentPlayer._id && contraDiagonal[2].whoUseIt._id == currentPlayer._id)) {
-        this.newWinner(currentPlayer)
-        winner = currentPlayer
+        this.newWinner(currentPlayer);
+        winner = currentPlayer;
     }
 
     if (winner != undefined) {
-        this.changeStatus("Finish")
-        gameEnded = true
-        console.log("Tenemos un nuevo ganador.")
+        this.changeStatus("Finish");
+        gameEnded = true;
+        console.log("Tenemos un nuevo ganador.");
     }
 
-    return gameEnded
+    return gameEnded;
 }
 
 
@@ -148,7 +148,7 @@ Player.prototype.changeTurn = function(playerTurn) {
 
 //set the piece to the player
 Player.prototype.choosePiece = function(piece) {
-    this._pieceSelected = piece
+    this._pieceSelected = piece;
 }
 
 Player.prototype.increaseWon = function() {
@@ -180,7 +180,7 @@ var Cell = function(row, column, name) {
     this.busy = false;
     this.whoUseIt = undefined;
     this.isFree = function() {
-        return !this.busy
+        return !this.busy;
     }
 }
 
@@ -191,5 +191,5 @@ Cell.prototype.setCellStatus = function(busy) {
 
 //set the user to the cell
 Cell.prototype.playerUsing = function(player) {
-    this.whoUseIt = player
+    this.whoUseIt = player;
 }
