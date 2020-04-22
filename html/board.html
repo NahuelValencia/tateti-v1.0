@@ -12,10 +12,10 @@
 <body>
     <div class="row">
 
-        <h1 style="text-align: center;">TA-TE-TI</h1>
+        <h1 class="title">TA-TE-TI</h1>
 
         <div class="column">
-            <h2>Players</h2>
+            <h2 class="title">Players</h2>
 
             <form name="players">
                 <label for="player1">Name of player one: </label>
@@ -34,16 +34,16 @@
                     <option value="O">O</option>
                 </select><br /><br />
 
-                <input id="playbtn" type="button" value="Play!" onclick="prepareGame()">
+                <input id="playbtn" class="button" type="button" value="Play!" onclick="prepareGame()">
             </form>
 
         </div>
 
         <div class="column">
-            <h2>Board</h2>
+            <h2 class="title">Board</h2>
 
             <h4 type="text" id="turnLabel">Turns</h4>
-            <br>
+            <br/>
             <table id="boardTateti">
                 <tr>
                     <td><input type="button" class="cell" id="button_1" onclick="play(this,0,0,'btn1')"></td>
@@ -63,19 +63,18 @@
             </table>
 
             <br><br><br>
-            <input type="button" value="New Game" onclick="clearBoard()">
-            <input style="visibility: hidden;" type="button" value="Play Again" onclick="playAgain()" id="playAgainBtn">
+            <input class="button" type="button" value="New Game" onclick="clearBoard()">
+            <input class="button" style="visibility: hidden;" type="button" value="Play Again" onclick="playAgain()" id="playAgainBtn">
             <br><br><br>
 
         </div>
 
         <div class="column">
-            <h2>History</h2>
+            <h2 class="title">History</h2>
             <br>
 
-            <table cellspacing="0" cellpadding="0" width="425">
-
-                <tr style="color:white;background-color:grey">
+            <table class="history">
+                <tr>
                     <th></th>
                     <th id="namePlayer1">Player 1</th>
                     <th id="namePlayer2">Player 2</th>
@@ -96,7 +95,7 @@
                     <td style="text-align: center;" id="tied2">0</td>
                 </tr>
             </table>
-            <br>
+            <br><br>
             <table>
                 <tr>
                     <td>Total Games: </td>
