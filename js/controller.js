@@ -6,6 +6,7 @@ function selectPiece(piece) {
     var piecePlayer1 = document.getElementById("piece_player1");
     var piecePlayer2 = document.getElementById("piece_player2");
 
+    //Asign pieces. If player1 choose 'X' then player2 has 'O'
     if (piece.id == piecePlayer1.id && piece.selectedIndex == '1') {
         piecePlayer2.selectedIndex = 2;
     } else if (piece.id == piecePlayer1.id && piece.selectedIndex == '2') {
@@ -16,20 +17,20 @@ function selectPiece(piece) {
         piecePlayer1.selectedIndex = 1;
     }
 
-    //when players choose to play again
-    if (tatetiGame != undefined && tatetiGame.status === 'Play Again') {
-        tatetiGame._player[0].choosePiece(piecePlayer1.value);
-        tatetiGame._player[1].choosePiece(piecePlayer2.value);
+    //when players choose to play again and change pieces
+    if (tatetiGame != undefined && tatetiGame.status() === 'Play Again') {
+        tatetiGame.player()[0].choosePiece(piecePlayer1.value);
+        tatetiGame.player()[1].choosePiece(piecePlayer2.value);
         tatetiGame.changeStatus("Started");
 
         //set turn to the player how has chosen an X
-        tatetiGame._player.forEach(element => {
-            if (element._pieceSelected == 'X') {
+        tatetiGame.player().forEach(element => {
+            if (element.pieceSelected() == 'X') {
                 element.changeTurn(true);
             }
         })
 
-        showTurn(tatetiGame._player);
+        showTurn(tatetiGame.player());
     }
 }
 
@@ -70,15 +71,15 @@ function prepareGame() {
     tatetiGame = new TatetiGame([player1, player2], board, "Started");
 
     //set turn to the player how has chosen an X
-    tatetiGame._player.forEach(element => {
-        if (element._pieceSelected == 'X') {
+    tatetiGame.player().forEach(element => {
+        if (element.pieceSelected() == 'X') {
             element.changeTurn(true);
         }
     })
 
-    console.log("Game status: " + tatetiGame.status);
+    console.log("Game status: " + tatetiGame.status());
 
-    showTurn(tatetiGame._player);
+    showTurn(tatetiGame.player());
 
 }
 
@@ -94,7 +95,7 @@ function prepareBoard() {
     var cell8 = new Cell(2, 2, "btn9");
 
     var board = new Board();
-    board._cell.push([cell0, cell1, cell2], [cell3, cell4, cell5], [cell6, cell7, cell8]);
+    board.cell().push([cell0, cell1, cell2], [cell3, cell4, cell5], [cell6, cell7, cell8]);
 
     return board;
 
@@ -103,15 +104,15 @@ function prepareBoard() {
 function showTurn(players) {
     var displayLabel = document.getElementById('turnLabel');
     players.forEach(element => {
-        if (element.turn) {
-            displayLabel.innerText = element._name + "'s turn. Piece: " + element._pieceSelected;
+        if (element.turn()) {
+            displayLabel.innerText = element.name() + "'s turn. Piece: " + element.pieceSelected();
         }
     });
 }
 
 function showWinner(player) {
     var displayLabel = document.getElementById('turnLabel');
-    displayLabel.innerText = player._name + " is the new winner !";
+    displayLabel.innerText = player.name() + " is the new winner !";
     refreshTableScore();
 }
 
@@ -130,20 +131,20 @@ function refreshTableScore() {
     var tiedPlayer2 = document.getElementById('tied2');
 
     var totalGames = document.getElementById('totalGames');
-    totalGames.innerText = tatetiGame.totalGames;
+    totalGames.innerText = tatetiGame.totalGames();
 
-    tatetiGame._player.forEach(element => {
+    tatetiGame.player().forEach(element => {
 
-        if (element._id == 1) {
-            wonPlayer1.innerText = element._won;
-            lostPlayer1.innerText = element._lost;
-            tiedPlayer1.innerText = element._tied;
+        if (element.playerId() == 1) {
+            wonPlayer1.innerText = element.won();
+            lostPlayer1.innerText = element.lost();
+            tiedPlayer1.innerText = element.tied();
         }
 
-        if (element._id == 2) {
-            wonPlayer2.innerText = element._won;
-            lostPlayer2.innerText = element._lost;
-            tiedPlayer2.innerText = element._tied;
+        if (element.playerId() == 2) {
+            wonPlayer2.innerText = element.won();
+            lostPlayer2.innerText = element.lost();
+            tiedPlayer2.innerText = element.tied();
         }
     });
 }
@@ -156,18 +157,18 @@ function play(btn, row, column, name) {
     }
 
     //si el juego a terminado no se puede seguir jugando
-    if (tatetiGame.status == "Finish") {
+    if (tatetiGame.status() == "Finish") {
         return;
     }
 
     //chequea que los jugadores tengan fichas
-    if (tatetiGame.status == "Play Again") {
+    if (tatetiGame.status() == "Play Again") {
         alert("Choose pieces");
         return false;
     }
 
     var currentPlayer = tatetiGame.currentPlayer();
-    console.log("Current player: " + currentPlayer._name);
+    console.log("Current player(): " + currentPlayer.name());
 
     //ver si mejorar o borrar
     if (justStarted) {
@@ -179,23 +180,23 @@ function play(btn, row, column, name) {
 
     //check if the cell is busy otherwise, set cell Status as busy
     if (cellSelected.isFree()) {
-        tatetiGame._board.count++;
+        tatetiGame.board().increaseCount();
 
         //set the status of the cell to busy
-        cellSelected.setCellStatus(!cellSelected.busy);
+        cellSelected.setCellStatus(!cellSelected.busy());
 
         //set the player who use the cell to the CELL 
-        cellSelected.whoUseIt = currentPlayer;
+        cellSelected.playerUsing(currentPlayer);
 
         //draw piece in the board
         var displayPiece = document.getElementById(btn.id);
-        displayPiece.value = currentPlayer._pieceSelected;
+        displayPiece.value = currentPlayer.pieceSelected();
 
         //change players turn
         tatetiGame.changePlayerTurn();
 
         //muestra turno en pantalla
-        showTurn(tatetiGame._player);
+        showTurn(tatetiGame.player());
 
     } else {
         alert("Cell already used");
@@ -210,18 +211,18 @@ function checkEndGame(currentPlayer) {
         tatetiGame.increaseGameQty();
         currentPlayer.increaseWon();
 
-        tatetiGame._player.forEach(element => {
-            if (element._id != currentPlayer._id) {
-                element.increaseLost(tatetiGame.totalGames);
+        tatetiGame.player().forEach(element => {
+            if (element.playerId() != currentPlayer.playerId()) {
+                element.increaseLost(tatetiGame.totalGames());
             }
         });
 
         showWinner(currentPlayer);
         document.getElementById("playAgainBtn").style.visibility = 'visible';
 
-    } else if (tatetiGame._board.count == 9) { //tie
+    } else if (tatetiGame.board().count() == 9) { //tie
         tatetiGame.increaseGameQty();
-        tatetiGame._player.forEach(element => {
+        tatetiGame.player().forEach(element => {
             element.increaseTied();
         });
 
